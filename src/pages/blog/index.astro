@@ -21,23 +21,29 @@ const posts = (await getCollection('blog')).sort(
 			<h1 style="color:var(--pink-neon); border-bottom: 4px solid var(--pink-neon); padding-bottom: 10px; margin-bottom: 30px; text-shadow: 2px 2px 0 #000;">[ LOGS & RAMBLINGS ]</h1>
 			
 			<div class="blog-grid">
-				{posts.length === 0 ? (
+				{posts.length === 0 ?
+				(
 					<p style="text-align: center; font-style: italic; color: var(--pink-pastel);">Nothing here yet. The logs are empty.</p>
 				) : (
 					posts.map((post) => (
-						<article class="blog-card">
-							{/* Renders the thumbnail if it exists in the frontmatter */}
-							{post.data.heroImage && (
-								<img src={post.data.heroImage} alt="" style="width: 100%; border-radius: 8px; margin-bottom: 15px; box-shadow: var(--box-shadow);" />
-							)}
-							
-							<h2>{post.data.title}</h2>
-							<span class="card-meta">Date: {post.data.pubDate.toLocaleDateString()}</span>
-							
-							{/* Uses the exact description from the markdown file for the preview */}
-							<p class="card-excerpt">{post.data.description}</p>
-							
-							<a href={`/blog/${post.id}/`} class="mc-btn" style="font-size: 1rem; text-align: center;">Read Log</a>
+						<article class="blog-card" style="display: flex; flex-direction: column;">
+							{/* Wrap the entire card content in the link */}
+							<a href={`/blog/${post.id}/`} style="text-decoration: none; color: inherit; display: flex; flex-direction: column; flex-grow: 1; height: 100%;">
+								
+								{/* Renders the thumbnail if it exists in the frontmatter */}
+								{post.data.heroImage && (
+									<img src={post.data.heroImage} alt="" style="width: 100%; border-radius: 8px; margin-bottom: 15px; box-shadow: var(--box-shadow);" />
+								)}
+								
+								<h2>{post.data.title}</h2>
+								<span class="card-meta" style="margin-bottom: 10px;">Date: {post.data.pubDate.toLocaleDateString()}</span>
+								
+								{/* Uses the exact description from the markdown file for the preview */}
+								<p class="card-excerpt" style="flex-grow: 1;">{post.data.description}</p>
+								
+								{/* Changed from <a> to <div> so we don't nest links, but it keeps the .mc-btn styling */}
+								<div class="mc-btn" style="font-size: 1rem; text-align: center; margin-top: auto;">Read Log</div>
+							</a>
 						</article>
 					))
 				)}
