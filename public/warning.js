@@ -163,7 +163,6 @@
                     <button id="accept-btn" class="mc-btn" disabled>INITIALIZING</button>
                 </div>
             </div>
-            // <button id="blog-bar-btn" class="blog-bar-btn">➜ VISIT BLOG NOW!  (NEWLY ADDED FEATURE)</button>
         </div>
     `;
     document.body.appendChild(consentOverlay);
