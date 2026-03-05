@@ -4,7 +4,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { getCollection } from 'astro:content';
 
-// Fetch all blog posts and sort them by date
+// Fetch and sort posts by date
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
@@ -26,9 +26,17 @@ const posts = (await getCollection('blog')).sort(
 				) : (
 					posts.map((post) => (
 						<article class="blog-card">
+							{/* Renders the thumbnail if it exists in the frontmatter */}
+							{post.data.heroImage && (
+								<img src={post.data.heroImage} alt="" style="width: 100%; border-radius: 8px; margin-bottom: 15px; box-shadow: var(--box-shadow);" />
+							)}
+							
 							<h2>{post.data.title}</h2>
-							<span class="card-meta">Date: {post.data.pubDate.toLocaleDateString()} // Tag: {post.data.tags ? post.data.tags.join(', ') : 'None'}</span>
+							<span class="card-meta">Date: {post.data.pubDate.toLocaleDateString()}</span>
+							
+							{/* Uses the exact description from the markdown file for the preview */}
 							<p class="card-excerpt">{post.data.description}</p>
+							
 							<a href={`/blog/${post.id}/`} class="mc-btn" style="font-size: 1rem; text-align: center;">Read Log</a>
 						</article>
 					))
