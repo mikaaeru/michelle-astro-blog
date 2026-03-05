@@ -2,7 +2,7 @@
 title: "This Site Was Revived From The Dead and Thanks to Cloudflare For That"
 description: "As you might realized a couple of months ago, there were a few things that happened to this site, and I had absolutely no idea how it would spiralled out of control"
 pubDate: "Dec 29 2025"
-heroImage: "/nakal.webp"
+heroImage: "/nakal.png"
 ---
 
 # FUCK FUCK FUCK
