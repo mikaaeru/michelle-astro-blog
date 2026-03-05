@@ -2,30 +2,63 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={`"DT 770 PRO AND AIRPODS PRO 2 ARE THE BEST PAIRS OF HEADPHONES TOGETHER"`} />
+		<BaseHead title="Michelle's SHIT AUDIO" description="FUCK OVERRATED HEADPHONES..." />
 	</head>
 	<body>
 		<Header />
+		
 		<main>
-			<section class="intro-section" style="margin-bottom:40px;">
-				<h1 style="color:var(--pink-neon); text-shadow: 2px 2px 0 #000; font-size: 2.5rem; text-transform:uppercase;">FUCK OVERRATED HEADPHONES, DT 770 PROS ARE THE REAL HEADPHONES.</h1>
-				<p class="subtitle" style="font-size:1.3rem;">It is built like a BEYER, cheap looking but rugged. It is immortal and protects your Airpods Pro 2 well. Although the sound is bad, you can EQ it if you have the mental clarity, sanity, and capacity to make it better than HD 800 S, or just wear Airpods Pro 2 under it</p>
+			<section class="hero mc-border">
+				<img src="/blog/contents/bestpair.png" alt="Beyerdynamic DT 770 Pro Headphone" style="display: block; margin: 0 auto 15px; max-width: 100%; height: auto; width: 500px;">
+				<h1>DT 770 PRO AND AIRPODS PRO 2 ARE THE BEST PAIRS OF HEADPHONES TOGETHER</h1>
+				<p class="subtitle">FUCK OVERHYPED HEADPHONES, AIRPODS PRO 2 IS THE REAL HEADPHONES PAIR (IF YOU WEAR IT TOGETHER).</p>
+				<p class="subtitle">Seriously though! It is by far the most well-rounded over-ears headphone without compromise, maybe not the sound. The build really is the classic Beyedynanic build, cheap looking but rugged in a good way. This means this headphone wouldn't just die or get scratched whenever you accidentally dropped or bumped it. Although the sound is rather bad, you can EQ it if you have the mental clarity, sanity, and capacity to make it better than HD 800S. </p>
+				<p class="subtitle">So bad sound but comfy earpads? JUST WEAR THEM OVER THE OTHER. </p>
+				<p class="subtitle">Airpods Pro 2 good sound and ANC will be helped by DT 770 PRO's excellent high frequency attenuation</p>
+				<p class="subtitle">Just buy Airpods Pro 2 for your sanity, please. They sound better.</p>
+				
+				<div style="margin-top: 30px;">
+					<a href="https://www.amazon.com/Apple-Generation-Cancelling-Transparency-Personalized/dp/B0CHWRXH8B" target="_blank" class="mc-btn" style="background: #FF9900; color: #000; display: inline-flex; align-items: center; justify-content: center; gap: 10px;">
+						<i class="fa-brands fa-amazon" style="font-size: 1.4rem;"></i>
+						<span>Buy on Amazon</span>
+					</a>
+				</div>
+				<div style="margin-top:20px;">
+					<span style="font-size:3rem; animation: float 2s infinite;">💖</span>
+				</div>
+			</section>        
+		</main>
+
+		<main>
+			<section class="hero mc-border">
+				<img src="/favicon.png" alt="Michelle" class="profile-img">
+				<div class="social-links">
+					<a href="https://discord.com/users/654535856950083603" target="_blank" class="mc-btn" style="background: #5865F2; color: white;">
+						<i class="fa-brands fa-discord"></i> Discord</a>
+					<a href="https://github.com/mikaaeru" target="_blank" class="mc-btn" style="background: #333; color: white;">
+						<i class="fa-brands fa-github"></i> GitHub</a>
+					<a href="https://www.youtube.com/@kamikamieu" target="_blank" class="mc-btn" style="background: #FF0000; color: white;">
+						<i class="fa-brands fa-youtube"></i> YouTube</a>
+				</div>
+				<h1>My name is Michelle</h1>
+				<p class="subtitle">Jesus Christ, you came here? Why even bother visiting this site, since there’s practically nothing here. My name is Michelle and I’m not racist because I’m neither white or stereotypically asian. I’m just myself and I don’t care how would anyone perceive me, although I still prefer a small talk about something other than quieting alone.
+				</p>
+				<div style="margin-top:20px;">
+					<span style="font-size:3rem; animation: float 2s infinite;">💖</span>
+				</div>
 			</section>
-			
-			<div style="text-align: center; margin-bottom: 50px;">
-				<img src="/blog/contents/bestpair.png" alt="Beyerdynamic DT 770 Pro Headphone" style="display: block; max-width: 100%; height: auto; margin: 0 auto; border: var(--border-width) solid var(--border-color); padding: 5px; background: var(--mc-bg-dark); box-shadow: 5px 5px 0 var(--border-color);" />
-			</div>
 
 			<h2 style="color:var(--pink-pastel); text-shadow: 2px 2px 0 #000;">> Latest Entries_</h2>
-			<div class="blog-grid" style="margin-top: 20px;">
-				</div>
-		</main>
+            </main>
+
 		<Footer />
-		<script is:inline src="/warning.js"></script>
+        
+        <script is:inline src="/warning.js"></script>
 	</body>
 </html>
