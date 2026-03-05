@@ -58,7 +58,7 @@
             width: 90%; max-width: 900px; 
             border: 4px solid #000;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);   
-            display: flex; flex-direction: column; /* Changed to column for stacking */
+            display: flex; flex-direction: column; 
             font-family: 'VT323', monospace;
             overflow: hidden;
         }
@@ -81,23 +81,6 @@
         }
         .mc-btn:hover:not(:disabled) { background: #fff; color: #000; }
         .mc-btn:disabled { opacity: 0.5; cursor: wait; }
-
-        /* Full-width Blog Bar */
-        .blog-bar-btn {
-            width: 100%;
-            background: #5b5bff;
-            color: #fff;
-            border: none;
-            border-top: 4px solid #000;
-            padding: 15px;
-            font-family: inherit;
-            font-size: 1.5rem;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: background 0.2s;
-        }
-        .blog-bar-btn:hover { background: #7c7cff; }
         
         #warning-flash {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -163,7 +146,6 @@
                     <button id="accept-btn" class="mc-btn" disabled>INITIALIZING</button>
                 </div>
             </div>
-            <button id="blog-bar-btn" class="blog-bar-btn">➜ VISIT BLOG NOW!  (NEWLY ADDED FEATURE)</button>
         </div>
     `;
     document.body.appendChild(consentOverlay);
@@ -174,14 +156,7 @@
 
         const acceptBtn = document.getElementById('accept-btn');
         const declineBtn = document.getElementById('decline-btn');
-        const blogBtn = document.getElementById('blog-bar-btn');
         const loadText = document.getElementById('loading-status');
-
-        // Handles blog redirect and excludes it from the exit warning
-        blogBtn.addEventListener('click', () => {
-            bypassWarning = true;
-            window.location.href = 'https://blog.kamikami.eu';
-        });
 
         try {
             const fetchPromises = audioSources.map(src => fetch(src));
