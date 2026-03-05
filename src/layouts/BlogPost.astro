@@ -9,7 +9,7 @@ type Props = CollectionEntry<'blog'>['data'];
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
-
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} />
@@ -51,6 +51,12 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			.last-updated-on {
 				font-style: italic;
 			}
+            /* Add styling for the excerpt/preview to match the list page */
+            .card-excerpt {
+                font-size: 1.1rem;
+                color: var(--pink-pastel);
+                margin-bottom: 2em;
+            }
 		</style>
 	</head>
 
@@ -75,6 +81,9 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 						</div>
 						{/* 1:1 match with the index page styling */}
 						<h1 style="color:var(--pink-neon); border-bottom: 4px solid var(--pink-neon); padding-bottom: 10px; margin-bottom: 30px; text-shadow: 2px 2px 0 #000;">{title}</h1>
+                        
+                        {/* The exact same word preview used in the post lists */}
+                        {description && <p class="card-excerpt">{description}</p>}
 					</div>
 					<slot />
 				</div>
