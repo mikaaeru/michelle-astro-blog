@@ -1,155 +1,411 @@
-/*
-  The CSS in this style tag is based off of Bear Blog's default CSS.
-  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
-  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
- */
-
+/* --- styles.css --- */
 :root {
-	--accent: #2337ff;
-	--accent-dark: #000d8a;
-	--black: 15, 18, 25;
-	--gray: 96, 115, 159;
-	--gray-light: 229, 233, 240;
-	--gray-dark: 34, 41, 57;
-	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
-	--box-shadow:
-		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
-		0 16px 32px rgba(var(--gray), 33%);
-}
-@font-face {
-	font-family: "Atkinson";
-	src: url("/fonts/atkinson-regular.woff") format("woff");
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: "Atkinson";
-	src: url("/fonts/atkinson-bold.woff") format("woff");
-	font-weight: 700;
-	font-style: normal;
-	font-display: swap;
-}
-body {
-	font-family: "Atkinson", sans-serif;
-	margin: 0;
-	padding: 0;
-	text-align: left;
-	background: linear-gradient(var(--gray-gradient)) no-repeat;
-	background-size: 100% 600px;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	color: rgb(var(--gray-dark));
-	font-size: 20px;
-	line-height: 1.7;
-}
-main {
-	width: 720px;
-	max-width: calc(100% - 2em);
-	margin: auto;
-	padding: 3em 1em;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	margin: 0 0 0.5rem 0;
-	color: rgb(var(--black));
-	line-height: 1.2;
-}
-h1 {
-	font-size: 3.052em;
-}
-h2 {
-	font-size: 2.441em;
-}
-h3 {
-	font-size: 1.953em;
-}
-h4 {
-	font-size: 1.563em;
-}
-h5 {
-	font-size: 1.25em;
-}
-strong,
-b {
-	font-weight: 700;
-}
-a {
-	color: var(--accent);
-}
-a:hover {
-	color: var(--accent);
-}
-p {
-	margin-bottom: 1em;
-}
-.prose p {
-	margin-bottom: 2em;
-}
-textarea {
-	width: 100%;
-	font-size: 16px;
-}
-input {
-	font-size: 16px;
-}
-table {
-	width: 100%;
-}
-img {
-	max-width: 100%;
-	height: auto;
-	border-radius: 8px;
-}
-code {
-	padding: 2px 5px;
-	background-color: rgb(var(--gray-light));
-	border-radius: 2px;
-}
-pre {
-	padding: 1.5em;
-	border-radius: 8px;
-}
-pre > code {
-	all: unset;
-}
-blockquote {
-	border-left: 4px solid var(--accent);
-	padding: 0 0 0 20px;
-	margin: 0px;
-	font-size: 1.333em;
-}
-hr {
-	border: none;
-	border-top: 1px solid rgb(var(--gray-light));
-}
-@media (max-width: 720px) {
-	body {
-		font-size: 18px;
-	}
-	main {
-		padding: 1em;
-	}
+    /* --- DEFAULT: LIGHT MODE (Pink & White) --- */
+    --mc-bg-dark: #ffffff;       /* Pure White Background */
+    --mc-stone: #fff0f5;         /* Lavender Blush elements */
+    --mc-shadow: #dddddd;        /* Light grey shadow */
+    
+    /* Text */
+    --text-main: #222222;        /* Dark Grey text */
+    --text-muted: #666666;       /* Medium Grey text */
+    
+    /* Theme Colors */
+    --pink-neon: #ff1493;        /* Deep Pink */
+    --pink-pastel: #ff69b4;      /* Hot Pink */
+    --pink-deep: #c71585;        /* Violet Red */
+    --pink-glow: rgba(255, 105, 180, 0.3);
+
+    /* Misc */
+    --border-color: #ff69b4;     /* Pink borders in light mode */
+    --btn-border: #888888;
+    --logo-color: #ff1493;
+    --logo-shadow: #ffd1dc;
+    --bg-pattern: #f0f0f0;       /* Light grey pixel pattern */
+
+    /* Spacing & Sizes */
+    --border-width: 4px;
+    --container-width: 1000px;
 }
 
-.sr-only {
-	border: 0;
-	padding: 0;
-	margin: 0;
-	position: absolute !important;
-	height: 1px;
-	width: 1px;
-	overflow: hidden;
-	/* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
-	clip: rect(1px 1px 1px 1px);
-	/* maybe deprecated but we need to support legacy browsers */
-	clip: rect(1px, 1px, 1px, 1px);
-	/* modern browsers, clip-path works inwards from each corner */
-	clip-path: inset(50%);
-	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
-	white-space: nowrap;
+/* --- AUTOMATIC DARK MODE SWITCH --- */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* --- OVERRIDE: DARK MODE (Original Minecraft Style) --- */
+        --mc-bg-dark: #121212;
+        --mc-stone: #3a3a3a;
+        --mc-shadow: #1e1e1e;
+        
+        /* Text */
+        --text-main: #ffffff;
+        --text-muted: #cccccc;
+        
+        /* Theme Colors */
+        --pink-neon: #ff6ec7;       /* Bright Neon Pink */
+        --pink-pastel: #ff92df;     /* Pastel Pink text */
+        --pink-deep: #b04286;       /* Darker Pink */
+        --pink-glow: rgba(255, 110, 199, 0.5);
+
+        /* Misc */
+        --border-color: #ff92df;
+        --btn-border: #000000;
+        --logo-color: #ff6ec7;
+        --logo-shadow: #000000;
+        --bg-pattern: #1a1a1a;      /* Dark grey pixel pattern */
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    /* Transparent so the pseudo-elements show through */
+    background-color: transparent;
+    color: var(--text-main);
+    font-family: 'VT323', monospace;
+    font-size: 1.3rem;
+    
+    /* Structure for background layers */
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: color 0.3s;
+}
+
+/* --- BACKGROUND IMAGE LAYER (Blurred) --- */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2; /* Furthest back */
+    
+    background-image: url('background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* Blur Effect */
+    filter: blur(10px);
+    /* Scale slightly to hide blurred edges */
+    transform: scale(1.05);
+}
+
+/* --- BACKGROUND TINT LAYER (Readability) --- */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Behind content, in front of image */
+    
+    /* Adapts to Light/Dark mode variable */
+    background-color: var(--mc-bg-dark);
+    
+    /* Adjust opacity to see more/less of the image (0.8 = 80% solid color) */
+    opacity: 0.8; 
+    transition: background-color 0.3s;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* --- UTILS --- */
+.mc-border {
+    border: var(--border-width) solid;
+    border-color: 
+        var(--pink-pastel)    /* Top */
+        var(--pink-deep)      /* Right */
+        var(--pink-deep)      /* Bottom */
+        var(--pink-pastel);   /* Left */
+    background-color: var(--mc-stone);
+    box-shadow: 4px 4px 0 var(--mc-shadow); /* Dynamic Shadow */
+}
+
+/* --- HEADER --- */
+header {
+    /* Semi-transparent background adapts to mode */
+    background: color-mix(in srgb, var(--mc-bg-dark) 90%, transparent); 
+    border-bottom: var(--border-width) solid var(--pink-deep);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 1rem 0;
+    box-shadow: 0 4px 15px var(--pink-glow);
+    backdrop-filter: blur(5px);
+}
+
+.nav-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 2.5rem;
+    color: var(--logo-color);
+    text-shadow: 3px 3px 0 var(--logo-shadow);
+    letter-spacing: 2px;
+    animation: float 3s ease-in-out infinite;
+}
+
+/* This span handles the "SHIT AUDIO" part */
+.logo span {
+    color: var(--text-main) !important;
+}
+
+/* --- NAVIGATION --- */
+.nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.mc-btn {
+    display: inline-block;
+    padding: 10px 25px;
+    background: var(--mc-stone);
+    color: var(--pink-pastel);
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    
+    /* 3D Border Trick */
+    box-shadow: 
+        inset 3px 3px 0 rgba(255,255,255,0.2),
+        inset -3px -3px 0 rgba(0,0,0,0.2),
+        3px 3px 0 var(--btn-border);
+    border: 2px solid var(--btn-border);
+    
+    transition: all 0.1s;
+}
+
+/* Dark Mode Text Override for Buttons to ensure contrast */
+@media (prefers-color-scheme: dark) {
+    .mc-btn { color: var(--pink-pastel); }
+}
+@media (prefers-color-scheme: light) {
+    .mc-btn { color: var(--pink-deep); font-weight: bold; }
+}
+
+.mc-btn:hover {
+    background: var(--pink-deep);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 
+        inset 3px 3px 0 rgba(255,255,255,0.2),
+        inset -3px -3px 0 rgba(0,0,0,0.2),
+        3px 5px 0 var(--btn-border),
+        0 0 15px var(--pink-neon);
+    cursor: pointer;
+}
+
+.mc-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 0 0 var(--btn-border);
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: var(--pink-neon);
+    cursor: pointer;
+}
+
+/* --- MAIN CONTENT --- */
+main {
+    max-width: var(--container-width);
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 60px;
+    padding: 40px;
+    background: color-mix(in srgb, var(--mc-bg-dark) 60%, transparent);
+    border: 4px dashed var(--pink-deep);
+}
+
+.hero-mini {
+    text-align: left; 
+    margin-bottom: 40px; 
+    padding: 20px;
+    border-bottom: 4px dashed var(--pink-deep);
+}
+
+h1 { 
+    font-size: 3rem; 
+    margin: 0; 
+    color: var(--pink-pastel); 
+    text-shadow: 4px 4px 0 var(--mc-shadow); 
+}
+
+p.subtitle { 
+    color: var(--text-muted); 
+    font-size: 1.5rem; 
+    margin-top: 10px; 
+}
+
+/* --- BLOG GRID --- */
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.blog-card {
+    background: color-mix(in srgb, var(--mc-stone) 95%, black);
+    padding: 20px;
+    position: relative;
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid var(--btn-border);
+}
+
+.blog-card:hover {
+    transform: scale(1.02);
+    z-index: 10;
+    border-color: var(--pink-neon);
+    box-shadow: 4px 4px 0 var(--pink-pastel);
+}
+
+.card-header {
+    background: var(--mc-bg-dark);
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    border: 2px solid var(--btn-border);
+    font-size: 4rem; 
+    overflow: hidden;
+}
+
+.card-title {
+    color: var(--pink-neon);
+    font-size: 1.8rem;
+    margin: 0 0 10px 0;
+    line-height: 1.1;
+}
+
+.card-meta {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--pink-deep);
+    padding-bottom: 5px;
+    display: inline-block;
+    width: 100%;
+}
+
+.card-excerpt {
+    font-size: 1.1rem;
+    color: var(--text-main);
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+/* --- SPECIFIC: ABOUT PAGE --- */
+.profile-img {
+    width: 160px;          
+    height: 160px;         
+    border-radius: 50%;   
+    object-fit: cover;    
+    border: 3px solid var(--pink-pastel); 
+    box-shadow: 2px 2px 0 var(--mc-shadow);           
+    display: block;
+    margin: 0 auto 15px auto;             
+}
+
+.social-links {
+    display: flex;
+    justify-content: center; 
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap; 
+}
+
+.social-links .mc-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; 
+    padding: 8px 15px;
+    font-size: 1.1rem;
+    text-decoration: none;
+}
+
+.social-links .mc-btn:hover i {
+    transform: scale(1.2);
+    transition: transform 0.2s;
+}
+
+/* --- SPECIFIC: BLOG PAGINATION --- */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 50px;
+}
+
+/* --- FOOTER --- */
+footer {
+    margin-top: 80px;
+    background: var(--mc-shadow); /* Slightly darker than bg */
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 4px solid var(--pink-neon);
+    color: var(--pink-pastel);
+}
+
+/* --- ANIMATIONS --- */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+/* --- RESPONSIVE MEDIA QUERIES --- */
+@media (max-width: 768px) {
+    .nav-container {
+        flex-wrap: wrap;
+    }
+
+    .menu-toggle {
+        display: block; 
+    }
+
+    .nav-links {
+        display: none; 
+        width: 100%;
+        flex-direction: column;
+        margin-top: 20px;
+    }
+
+    .nav-links.active {
+        display: flex; 
+        background: var(--mc-bg-dark);
+        border: 2px solid var(--pink-deep);
+        padding: 15px;
+    }
+
+    .mc-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    h1 { font-size: 2rem; }
+    
+    .blog-grid {
+        grid-template-columns: 1fr; 
+    }
 }
