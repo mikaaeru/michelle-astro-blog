@@ -1,27 +1,53 @@
 ---
-import HeaderLink from './HeaderLink.astro';
+const pathname = new URL(Astro.request.url).pathname;
+const currentPath = pathname.replace(/\/$/, ''); 
+
+const activeStyle = "background:var(--pink-neon); color:white; box-shadow: inset 3px 3px 0 rgba(255,255,255,0.2), inset -3px -3px 0 rgba(0,0,0,0.4), 3px 5px 0 #000, 0 0 15px var(--pink-neon);";
 ---
+
 <header>
     <div class="nav-container">
         <div class="logo">Michelle's<span style="color:#fff;"> SHIT AUDIO</span></div>
         
-        <button class="menu-toggle" id="menu-toggle-btn">
+        <button class="menu-toggle" onclick="toggleMenu()">
             [ 🖕🏻 ]
         </button>
 
         <nav class="nav-links" id="navLinks">
-             <HeaderLink href="/" class="mc-btn" style="background:var(--pink-neon); color:white; box-shadow: inset 3px 3px 0 rgba(255,255,255,0.2), inset -3px -3px 0 rgba(0,0,0,0.4), 3px 5px 0 #000, 0 0 15px var(--pink-neon);">Home</HeaderLink>
-             <HeaderLink href="/blog" class="mc-btn">Blogs</HeaderLink>
-             <HeaderLink href="/about" class="mc-btn">About</HeaderLink>
-             <a href="/onlyfans-intro.mp4" class="mc-btn" style="background:var(--pink-deep); color:white;">OnlyFans</a>
+            <a href="/" class="mc-btn" style={currentPath === '' ? activeStyle : ''}>Home</a>
+            <a href="/blog" class="mc-btn" style={currentPath.startsWith('/blog') ? activeStyle : ''}>Blogs</a>
+            <a href="/about" class="mc-btn" style={currentPath === '/about' ? activeStyle : ''}>About</a>
+            <a href="/onlyfans-intro.mp4" class="mc-btn" style="background:var(--pink-deep); color:white;">OnlyFans</a>
+            <button class="mc-btn" id="themeToggle" onclick="toggleTheme()" style="background: var(--mc-stone);">
+                <i class="fa-solid fa-moon"></i>
+            </button>
         </nav>
     </div>
 </header>
 
-<script>
-    // Vanilla JS for the menu toggle inside Astro
-    document.getElementById('menu-toggle-btn')?.addEventListener('click', () => {
+<script is:inline>
+    function toggleMenu() {
         const nav = document.getElementById('navLinks');
-        nav?.classList.toggle('active');
-    });
+        nav.classList.toggle('active');
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        const icon = document.querySelector('#themeToggle i');
+        if(isDark) {
+            icon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+            icon.classList.replace('fa-sun', 'fa-moon');
+        }
+    }
+
+    // Preserve theme on reload
+    if(localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelector('#themeToggle i').classList.replace('fa-moon', 'fa-sun');
+        });
+    }
 </script>
