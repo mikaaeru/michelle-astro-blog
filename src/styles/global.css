@@ -192,9 +192,7 @@ header {
         inset 3px 3px 0 rgba(255,255,255,0.2),
         inset -3px -3px 0 rgba(0,0,0,0.2),
         3px 3px 0 var(--btn-border);
-    border: 2px solid var(--btn-border);
-    
-    transition: all 0.1s;
+    border: 2px solid var(--btn-border);    
 }
 
 /* Dark Mode Text Override for Buttons to ensure contrast */
