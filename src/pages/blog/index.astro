@@ -2,6 +2,12 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+// Fetch all blog posts and sort them by date
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
 ---
 
 <!DOCTYPE html>
@@ -15,22 +21,18 @@ import Footer from '../../components/Footer.astro';
 			<h1 style="color:var(--pink-neon); border-bottom: 4px solid var(--pink-neon); padding-bottom: 10px; margin-bottom: 30px; text-shadow: 2px 2px 0 #000;">[ LOGS & RAMBLINGS ]</h1>
 			
 			<div class="blog-grid">
-				<article class="blog-card">
-					<h2>This Site was Dead, But Now is Alive, Thanks to Cloudflare for That</h2>
-					<span class="card-meta">Date: 29 Dec 2025 // Tag: #Experiments</span>
-					<p class="card-excerpt">
-					   As you might realized a couple of months ago, there were a few things that happened to this site, and I had absolutely no idea how it would spiralled out of control.
-					</p>
-					<a href="/blog/this-site-was-dead-but-now-alive-thanks-cloudflare" class="mc-btn" style="font-size: 1rem; text-align: center;">Read Log</a>
-				</article>
-			</div>
-
-			<div class="pagination">
-				<a href="#" class="mc-btn" style="padding: 5px 15px;">&lt;</a>
-				<a href="#" class="mc-btn" style="background:var(--pink-deep); color:white;">1</a>
-				<a href="#" class="mc-btn">2</a>
-				<a href="#" class="mc-btn">3</a>
-				<a href="#" class="mc-btn" style="padding: 5px 15px;">&gt;</a>
+				{posts.length === 0 ? (
+					<p style="text-align: center; font-style: italic; color: var(--pink-pastel);">Nothing here yet. The logs are empty.</p>
+				) : (
+					posts.map((post) => (
+						<article class="blog-card">
+							<h2>{post.data.title}</h2>
+							<span class="card-meta">Date: {post.data.pubDate.toLocaleDateString()} // Tag: {post.data.tags ? post.data.tags.join(', ') : 'None'}</span>
+							<p class="card-excerpt">{post.data.description}</p>
+							<a href={`/blog/${post.slug}/`} class="mc-btn" style="font-size: 1rem; text-align: center;">Read Log</a>
+						</article>
+					))
+				)}
 			</div>
 		</main>
 		<Footer />
