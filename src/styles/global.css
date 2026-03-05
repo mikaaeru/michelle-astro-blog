@@ -418,3 +418,30 @@ footer {
         grid-template-columns: 1fr; 
     }
 }
+/* --- MANUAL LIGHT MODE OVERRIDE --- */
+body.light-mode {
+    --mc-bg-dark: #ffffff;
+    --mc-stone: #fff0f5;
+    --mc-shadow: #dddddd;
+    --text-main: #222222;
+    --text-muted: #666666;
+    --pink-neon: #ff1493;
+    --pink-pastel: #ff69b4;
+    --pink-deep: #c71585;
+    --pink-glow: rgba(255, 105, 180, 0.3);
+    --border-color: #ff69b4;
+    --btn-border: #888888;
+    --logo-color: #ff1493;
+    --logo-shadow: #ffd1dc;
+    --bg-pattern: #f0f0f0;
+}
+
+/* --- THEME ICON LEGIBILITY FIX --- */
+#themeToggle i {
+    color: var(--text-main);
+    transition: color 0.3s;
+}
+
+#themeToggle:hover i {
+    color: #ffffff;
+}

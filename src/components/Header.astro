@@ -1,7 +1,6 @@
 ---
 const pathname = new URL(Astro.request.url).pathname;
-const currentPath = pathname.replace(/\/$/, ''); 
-
+const currentPath = pathname.replace(/\/$/, '');
 const activeStyle = "background:var(--pink-neon); color:white; box-shadow: inset 3px 3px 0 rgba(255,255,255,0.2), inset -3px -3px 0 rgba(0,0,0,0.4), 3px 5px 0 #000, 0 0 15px var(--pink-neon);";
 ---
 
@@ -18,36 +17,43 @@ const activeStyle = "background:var(--pink-neon); color:white; box-shadow: inset
             <a href="/blog" class="mc-btn" style={currentPath.startsWith('/blog') ? activeStyle : ''}>Blogs</a>
             <a href="/about" class="mc-btn" style={currentPath === '/about' ? activeStyle : ''}>About</a>
             <a href="/onlyfans-intro.mp4" class="mc-btn" style="background:var(--pink-deep); color:white;">OnlyFans</a>
-            <button class="mc-btn" id="themeToggle" onclick="toggleTheme()" style="background: var(--mc-stone);">
-                <i class="fa-solid fa-moon"></i>
+            <button class="mc-btn" id="themeToggle" onclick="cycleTheme()" style="background: var(--mc-stone);">
+                <i class="fa-solid fa-circle-half-stroke"></i>
             </button>
         </nav>
     </div>
 </header>
 
 <script is:inline>
-    function toggleMenu() {
-        const nav = document.getElementById('navLinks');
-        nav.classList.toggle('active');
+    const themes = ['system', 'dark', 'light'];
+    const icons = { system: 'fa-circle-half-stroke', dark: 'fa-moon', light: 'fa-sun' };
+
+    function getTheme() {
+        return localStorage.getItem('theme') || 'system';
     }
 
-    function toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-        const isDark = document.body.classList.contains('dark-mode');
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    function applyTheme(theme) {
+        document.body.classList.remove('dark-mode', 'light-mode');
+        if (theme !== 'system') document.body.classList.add(`${theme}-mode`);
+        
         const icon = document.querySelector('#themeToggle i');
-        if(isDark) {
-            icon.classList.replace('fa-moon', 'fa-sun');
-        } else {
-            icon.classList.replace('fa-sun', 'fa-moon');
-        }
+        if (icon) icon.className = `fa-solid ${icons[theme]}`;
     }
 
-    // Preserve theme on reload
-    if(localStorage.getItem('theme') === 'dark') {
-        document.body.classList.add('dark-mode');
-        document.addEventListener("DOMContentLoaded", () => {
-            document.querySelector('#themeToggle i').classList.replace('fa-moon', 'fa-sun');
-        });
+    function cycleTheme() {
+        const current = getTheme();
+        const next = themes[(themes.indexOf(current) + 1) % themes.length];
+        localStorage.setItem('theme', next);
+        applyTheme(next);
     }
+
+    function toggleMenu() {
+        document.getElementById('navLinks').classList.toggle('active');
+    }
+
+    applyTheme(getTheme());
+    document.addEventListener("DOMContentLoaded", () => applyTheme(getTheme()));
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (getTheme() === 'system') applyTheme('system');
+    });
 </script>
