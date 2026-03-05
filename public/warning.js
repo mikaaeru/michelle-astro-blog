@@ -221,7 +221,12 @@
     async function triggerWarning(e, force = false) {
         if (!force) {
             if (!isAccepted || !areAssetsLoaded || isPlaying) return; 
-            if (e && e.target && (e.target.closest('#consent-overlay') || e.target.closest('a'))) return;
+            if (e && e.target && (
+    e.target.closest('#consent-overlay') || 
+    e.target.closest('a') || 
+    e.target.closest('#themeToggle') || 
+    e.target.closest('.menu-toggle')
+)) return;
         }
 
         if (audioContext && audioContext.state === 'suspended') await audioContext.resume();
