@@ -22,13 +22,14 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				margin: 0 auto;
 				border-radius: 12px;
 				box-shadow: var(--box-shadow);
+				max-width: 100%;
+    			height: auto;
 			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
+			.prose img {
+ 				max-width: 100%;
+    			height: auto;
+    			border-radius: 8px; /* Optional: adds consistent styling */
+    			margin: 1em 0;      /* Optional: adds spacing around images */
 			}
 			.title {
 				margin-bottom: 1em;

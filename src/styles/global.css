@@ -1,4 +1,9 @@
 /* --- styles.css --- */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
 :root {
     /* --- DEFAULT: LIGHT MODE (Pink & White) --- */
     --mc-bg-dark: #ffffff;       /* Pure White Background */
@@ -445,3 +450,4 @@ body.light-mode {
 #themeToggle:hover i {
     color: #ffffff;
 }
+
