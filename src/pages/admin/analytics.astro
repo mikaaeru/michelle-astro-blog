@@ -12,17 +12,9 @@ import Footer from '../../components/Footer.astro';
 		<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/1.0.35/ua-parser.min.js"></script>
 		
 		<style>
-			/* Make the wrapper wider than the standard blog post width */
-			main {
-				max-width: 1400px; /* Allow the main container to stretch wider */
-				margin: 0 auto;
-				padding: 0 1em;
-			}
-
 			.analytics-wrapper {
 				background: color-mix(in srgb, var(--mc-bg-dark) 85%, transparent);
 				padding: 20px;
-				margin-top: 20px;
 				width: 100%;
 			}
 			
@@ -46,24 +38,22 @@ import Footer from '../../components/Footer.astro';
 				width: 100%;
 				border-collapse: collapse;
 				text-align: left;
+				/* Apply readable standard sans-serif font to the entire table */
+				font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 			}
 
-			/* KEEP RETRO FONT FOR HEADERS ONLY */
 			th {
 				background-color: var(--mc-stone);
 				color: var(--pink-neon);
-				font-size: 1.4rem;
+				font-size: 1rem;
 				text-transform: uppercase;
 				white-space: nowrap;
-				text-shadow: 1px 1px 0 var(--mc-shadow);
 				padding: 12px 15px;
 				border-bottom: 2px solid var(--btn-border);
 				border-right: 1px solid var(--btn-border);
 			}
 
-			/* USE READABLE SANS-SERIF FONT FOR DATA */
 			td {
-				font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 				font-size: 0.95rem;
 				line-height: 1.4;
 				padding: 12px 15px;
@@ -83,12 +73,11 @@ import Footer from '../../components/Footer.astro';
 				word-break: break-all;
 			}
 
-			/* REMOVED TRUNCATION - Let the text wrap naturally */
 			.ua-cell {
 				color: var(--text-muted);
 				word-wrap: break-word;
 				word-break: normal;
-				min-width: 300px; /* Ensure it has enough room to breathe before wrapping */
+				min-width: 300px;
 			}
 
 			.map-link {
@@ -104,8 +93,7 @@ import Footer from '../../components/Footer.astro';
 
 			.loading-row {
 				text-align: center;
-				font-family: inherit; /* Inherits the retro font for the loading state */
-				font-size: 1.5rem;
+				font-size: 1.2rem;
 				color: var(--pink-neon);
 				animation: pulse 1.5s infinite;
 			}
@@ -156,7 +144,6 @@ import Footer from '../../components/Footer.astro';
 					
 					const tbody = document.getElementById('log-body');
 					tbody.innerHTML = '';
-
 					if (data.length === 0) {
 						tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">No traffic data recorded yet.</td></tr>';
 						return;
