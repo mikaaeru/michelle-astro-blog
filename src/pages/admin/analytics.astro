@@ -7,187 +7,189 @@ import Footer from '../../components/Footer.astro';
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title="Analytics | Michelle's SHIT" description="Live Traffic Analytics Dashboard" />
-		<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/1.0.35/ua-parser.min.js"></script>
-		
-		<style>
-			/* Inherits standard layout from global CSS, no main overrides */
-			
-			.analytics-wrapper {
-				background: color-mix(in srgb, var(--mc-bg-dark) 85%, transparent);
-				padding: 20px;
-				margin-top: 20px;
-				width: 100%;
-			}
-			
-			h1.dashboard-title {
-				text-align: center;
-				color: var(--pink-pastel);
-				text-shadow: 3px 3px 0 var(--mc-shadow);
-				margin-bottom: 20px;
-				letter-spacing: 2px;
-			}
+    <head>
+        <BaseHead title="Analytics | Michelle's SHIT" description="Live Traffic Analytics Dashboard" />
+        <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/1.0.35/ua-parser.min.js"></script>
+        
+        <style>
+            /* Inherits standard layout from global CSS, no main overrides */
+            
+            .analytics-wrapper {
+                background: color-mix(in srgb, var(--mc-bg-dark) 85%, transparent);
+                padding: 20px;
+                margin-top: 20px;
+                width: 100%;
+            }
+            
+            h1.dashboard-title {
+                text-align: center;
+                color: var(--pink-pastel);
+                text-shadow: 3px 3px 0 var(--mc-shadow);
+                margin-bottom: 20px;
+                letter-spacing: 2px;
+            }
 
-			.table-responsive {
-				width: 100%;
-				overflow-x: auto;
-				border: 2px solid var(--btn-border);
-				background: var(--mc-bg-dark);
-			}
+            .table-responsive {
+                width: 100%;
+                overflow-x: auto; /* Keeps the horizontal scrollbar active */
+                border: 2px solid var(--btn-border);
+                background: var(--mc-bg-dark);
+            }
 
-			table {
-				width: 100%;
-				border-collapse: collapse;
-				text-align: left;
-			}
+            table {
+                width: 250%; /* Forces the table to be much wider than the container */
+                min-width: 2000px; /* Ensures a massive minimum width */
+                border-collapse: collapse;
+                text-align: left;
+            }
 
-			th {
-				background-color: var(--mc-stone);
-				color: var(--pink-neon);
-				text-transform: uppercase;
-				white-space: nowrap;
-				text-shadow: 1px 1px 0 var(--mc-shadow);
-				padding: 12px 15px;
-				border-bottom: 2px solid var(--btn-border);
-				border-right: 1px solid var(--btn-border);
-			}
+            th {
+                background-color: var(--mc-stone);
+                color: var(--pink-neon);
+                text-transform: uppercase;
+                white-space: nowrap;
+                text-shadow: 1px 1px 0 var(--mc-shadow);
+                padding: 12px 15px;
+                border-bottom: 2px solid var(--btn-border);
+                border-right: 1px solid var(--btn-border);
+                font-size: 0.75rem; /* Makes header text smaller */
+            }
 
-			/* Data cells naturally inherit global body font (VT323) */
-			td {
-				line-height: 1.4;
-				padding: 12px 15px;
-				border-bottom: 1px solid var(--btn-border);
-				border-right: 1px solid var(--btn-border);
-				vertical-align: top;
-				color: var(--text-main);
-			}
+            /* Data cells naturally inherit global body font (VT323) */
+            td {
+                line-height: 1.4;
+                padding: 12px 15px;
+                border-bottom: 1px solid var(--btn-border);
+                border-right: 1px solid var(--btn-border);
+                vertical-align: top;
+                color: var(--text-main);
+                font-size: 0.75rem; /* Makes body text smaller */
+                white-space: nowrap; /* Prevents text from breaking onto new lines */
+            }
 
-			tr:hover td {
-				background-color: var(--pink-glow);
-			}
+            tr:hover td {
+                background-color: var(--pink-glow);
+            }
 
-			.path-cell {
-				color: var(--pink-deep);
-				font-weight: bold;
-				word-break: break-all;
-			}
+            .path-cell {
+                color: var(--pink-deep);
+                font-weight: bold;
+                white-space: nowrap; /* Overrides previous word-break */
+            }
 
-			.ua-cell {
-				color: var(--text-muted);
-				word-wrap: break-word;
-				word-break: normal;
-				min-width: 250px;
-			}
+            .ua-cell {
+                color: var(--text-muted);
+                white-space: nowrap; /* Overrides previous word-wrap */
+            }
 
-			.map-link {
-				color: var(--pink-neon);
-				text-decoration: underline;
-				text-decoration-style: dashed;
-			}
+            .map-link {
+                color: var(--pink-neon);
+                text-decoration: underline;
+                text-decoration-style: dashed;
+            }
 
-			.map-link:hover {
-				color: var(--pink-pastel);
-				background: var(--mc-stone);
-			}
+            .map-link:hover {
+                color: var(--pink-pastel);
+                background: var(--mc-stone);
+            }
 
-			.loading-row {
-				text-align: center;
-				color: var(--pink-neon);
-				animation: pulse 1.5s infinite;
-			}
+            .loading-row {
+                text-align: center;
+                color: var(--pink-neon);
+                animation: pulse 1.5s infinite;
+            }
 
-			@keyframes pulse {
-				0% { opacity: 0.5; }
-				50% { opacity: 1; }
-				100% { opacity: 0.5; }
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		
-		<main>
-			<section class="analytics-wrapper mc-border">
-				<h1 class="dashboard-title"><i class="fa-solid fa-chart-terminal"></i> REAL-TIME TRAFFIC LOG</h1>
-				
-				<div class="table-responsive">
-					<table>
-						<thead>
-							<tr>
-								<th>Time</th>
-								<th>IP</th>
-								<th>Path</th>
-								<th>Location</th>
-								<th>Coordinates</th>
-								<th>OS</th>
-								<th>Browser</th>
-								<th>User Agent</th>
-							</tr>
-						</thead>
-						<tbody id="log-body">
-							<tr><td colspan="8" class="loading-row">LOADING DATA... <i class="fa-solid fa-compact-disc fa-spin"></i></td></tr>
-						</tbody>
-					</table>
-				</div>
-			</section>
-		</main>
+            @keyframes pulse {
+                0% { opacity: 0.5; }
+                50% { opacity: 1; }
+                100% { opacity: 0.5; }
+            }
+        </style>
+    </head>
+    <body>
+        <Header />
+        
+        <main>
+            <section class="analytics-wrapper mc-border">
+                <h1 class="dashboard-title"><i class="fa-solid fa-chart-terminal"></i> REAL-TIME TRAFFIC LOG</h1>
+                
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>IP</th>
+                                <th>Path</th>
+                                <th>Location</th>
+                                <th>Coordinates</th>
+                                <th>OS</th>
+                                <th>Browser</th>
+                                <th>User Agent</th>
+                            </tr>
+                        </thead>
+                        <tbody id="log-body">
+                            <tr><td colspan="8" class="loading-row">LOADING DATA... <i class="fa-solid fa-compact-disc fa-spin"></i></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
 
-		<Footer />
+        <Footer />
 
-		<script is:inline>
-			async function fetchLogs() {
-				try {
-					const response = await fetch('/api/analytics');
-					const data = await response.json();
-					
-					const tbody = document.getElementById('log-body');
-					tbody.innerHTML = '';
-					if (data.length === 0) {
-						tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">No traffic data recorded yet.</td></tr>';
-						return;
-					}
+        <script is:inline>
+            async function fetchLogs() {
+                try {
+                    const response = await fetch('/api/analytics');
+                    const data = await response.json();
+                    
+                    const tbody = document.getElementById('log-body');
+                    tbody.innerHTML = '';
+                    if (data.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">No traffic data recorded yet.</td></tr>';
+                        return;
+                    }
 
-					data.forEach(visit => {
-						const tr = document.createElement('tr');
-						
-						const parser = new UAParser(visit.user_agent);
-						const result = parser.getResult();
-						const os = result.os.name ? `${result.os.name} ${result.os.version || ''}`.trim() : 'Unknown OS';
-						const browser = result.browser.name ? `${result.browser.name} ${result.browser.version || ''}`.trim() : 'Unknown Browser';
-						
-						const location = `${visit.city !== 'unknown' ? visit.city + ', ' : ''}${visit.country}`;
-						
-						const lat = visit.latitude || 0;
-						const lng = visit.longitude || 0;
-						const coords = (lat !== 0 && lng !== 0) 
-							? `<a href="https://www.google.com/maps/search/?api=1&query=${lat},${lng}" target="_blank" class="map-link" title="View on map">${lat.toFixed(4)}, ${lng.toFixed(4)}</a>` 
-							: 'Unknown';
+                    data.forEach(visit => {
+                        const tr = document.createElement('tr');
+                        
+                        const parser = new UAParser(visit.user_agent);
+                        const result = parser.getResult();
+                        const os = result.os.name ? `${result.os.name} ${result.os.version || ''}`.trim() : 'Unknown OS';
+                        const browser = result.browser.name ? `${result.browser.name} ${result.browser.version || ''}`.trim() : 'Unknown Browser';
+                        
+                        const location = `${visit.city !== 'unknown' ? visit.city + ', ' : ''}${visit.country}`;
+                        
+                        const lat = visit.latitude || 0;
+                        const lng = visit.longitude || 0;
+                        const coords = (lat !== 0 && lng !== 0) 
+                            ? `<a href="https://www.google.com/maps/search/?api=1&query=${lat},${lng}" target="_blank" class="map-link" title="View on map">${lat.toFixed(4)}, ${lng.toFixed(4)}</a>` 
+                            : 'Unknown';
 
-						const timeString = new Date(visit.timestamp).toLocaleString(undefined, {
-							month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit'
-						});
+                        const timeString = new Date(visit.timestamp).toLocaleString(undefined, {
+                            month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit'
+                        });
 
-						tr.innerHTML = `
-							<td>${timeString}</td>
-							<td>${visit.ip}</td>
-							<td class="path-cell">${visit.path}</td>
-							<td>${location}</td>
-							<td>${coords}</td>
-							<td>${os}</td>
-							<td>${browser}</td>
-							<td class="ua-cell">${visit.user_agent || 'Unknown'}</td>
-						`;
-						tbody.appendChild(tr);
-					});
-				} catch (error) {
-					console.error("Failed to fetch analytics:", error);
-					document.getElementById('log-body').innerHTML = `<tr><td colspan="8" style="text-align: center; color: red;">Failed to load data.</td></tr>`;
-				}
-			}
+                        tr.innerHTML = `
+                            <td>${timeString}</td>
+                            <td>${visit.ip}</td>
+                            <td class="path-cell">${visit.path}</td>
+                            <td>${location}</td>
+                            <td>${coords}</td>
+                            <td>${os}</td>
+                            <td>${browser}</td>
+                            <td class="ua-cell">${visit.user_agent || 'Unknown'}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                } catch (error) {
+                    console.error("Failed to fetch analytics:", error);
+                    document.getElementById('log-body').innerHTML = `<tr><td colspan="8" style="text-align: center; color: red;">Failed to load data.</td></tr>`;
+                }
+            }
 
-			fetchLogs();
-			setInterval(fetchLogs, 5000);
-		</script>
-	</body>
+            fetchLogs();
+            setInterval(fetchLogs, 5000);
+        </script>
+    </body>
 </html>
