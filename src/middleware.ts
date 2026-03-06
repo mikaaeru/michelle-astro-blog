@@ -1,3 +1,4 @@
+// File: src/middleware.ts
 import { defineMiddleware } from "astro:middleware";
 
 export const onRequest = defineMiddleware(async (context, next) => {
@@ -6,7 +7,12 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
     // 2. Ignore assets, static files, or internal API calls to prevent DB spam
     const url = new URL(context.request.url);
-    if (url.pathname.startsWith('/_astro') || url.pathname.includes('.')) {
+    if (
+        url.pathname.startsWith('/_astro') || 
+        url.pathname.includes('.') ||
+        url.pathname.startsWith('/api/') ||  // Stops the 5-second polling from logging
+        url.pathname.startsWith('/admin/')   // Stops your dashboard visits from logging
+    ) {
         return response;
     }
 
