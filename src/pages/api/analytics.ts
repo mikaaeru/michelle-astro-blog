@@ -5,7 +5,6 @@ export const GET: APIRoute = async ({ locals }) => {
     if (!db) return new Response("DB not found", { status: 500 });
 
     try {
-        // Fetch the last 50 visits
         const { results } = await db.prepare(
             "SELECT * FROM visits ORDER BY timestamp DESC LIMIT 50"
         ).all();
