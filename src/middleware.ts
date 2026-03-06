@@ -25,6 +25,11 @@ export const onRequest = defineMiddleware(async (context, next) => {
     const ip = req.headers.get('CF-Connecting-IP') || 'unknown';
     const userAgent = req.headers.get('User-Agent') || 'unknown';
     
+    // --> NEW: Ignore Uptime Kuma pings regardless of version
+    if (userAgent.toLowerCase().includes('uptime-kuma')) {
+        return response;
+    }
+    
     // Cloudflare specific Geo data
     const cf = runtime.cf;
     const country = cf?.country || 'unknown';
