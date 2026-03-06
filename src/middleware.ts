@@ -8,8 +8,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
     if (
         url.pathname.startsWith('/_astro') || 
         url.pathname.includes('.') ||
-        url.pathname.startsWith('/api/') ||  // Stops the 5-second polling from logging
-        url.pathname.startsWith('/admin/')   // Stops your dashboard visits from logging
+        url.pathname.startsWith('/api/') ||  
+        url.pathname.startsWith('/admin/')   
     ) {
         return response;
     }
@@ -17,18 +17,18 @@ export const onRequest = defineMiddleware(async (context, next) => {
     if (context.cookies.has('CF_Authorization')) {
         return response;
     }
-    
-    const runtime = context.locals.runtime;
-    if (!runtime || !runtime.env.DB) return response; // Failsafe for local dev without bindings
 
     const req = context.request;
-    const ip = req.headers.get('CF-Connecting-IP') || 'unknown';
     const userAgent = req.headers.get('User-Agent') || 'unknown';
     
     if (userAgent.toLowerCase().includes('uptime-kuma')) {
         return response;
     }
     
+    const runtime = context.locals.runtime;
+    if (!runtime || !runtime.env.DB) return response; 
+
+    const ip = req.headers.get('CF-Connecting-IP') || 'unknown';
     const cf = runtime.cf;
     const country = cf?.country || 'unknown';
     const city = cf?.city || 'unknown';
@@ -43,6 +43,15 @@ export const onRequest = defineMiddleware(async (context, next) => {
     runtime.ctx.waitUntil(
         query.run().catch((err) => console.error("D1 Insert Error:", err))
     );
+
+    if (Math.random() < 0.01) {
+        const cleanupQuery = runtime.env.DB.prepare(
+            `DELETE FROM visits WHERE timestamp <= datetime('now', '-30 days')`
+        );
+        runtime.ctx.waitUntil(
+            cleanupQuery.run().catch((err) => console.error("D1 Cleanup Error:", err))
+        );
+    }
 
     return response;
 });
