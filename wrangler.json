@@ -25,7 +25,7 @@
 	"upload_source_maps": true,
 	"d1_databases": [
 		{
-			"binding": "analytics_db",
+			"binding": "DB",
 			"database_name": "analytics-db",
 			"database_id": "f9544be3-186d-4859-94ea-97194d5d0203"
 		}
