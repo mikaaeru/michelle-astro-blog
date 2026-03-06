@@ -39,7 +39,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
          VALUES (?, ?, ?, ?, ?, ?, ?)`
     ).bind(ip, country, city, longitude, latitude, url.pathname, userAgent);
 
-    runtime.ctx.waitUntil(query.run());
+    // Add error catching so it doesn't fail silently!
+    runtime.ctx.waitUntil(
+        query.run().catch((err) => console.error("D1 Insert Error:", err))
+    );
 
     return response;
 });
