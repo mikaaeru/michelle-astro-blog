@@ -17,7 +17,6 @@ import Footer from '../../components/Footer.astro';
                 padding: 20px;
                 margin-top: 20px;
                 
-                /* Forces the container to be 95% of the screen width and centers it, ignoring parent constraints */
                 width: 95vw !important;
                 max-width: 95vw !important;
                 position: relative;
@@ -55,7 +54,7 @@ import Footer from '../../components/Footer.astro';
                 padding: 12px 15px;
                 border-bottom: 2px solid var(--btn-border);
                 border-right: 1px solid var(--btn-border);
-                font-size: 1rem; /* Keeps pink headers normal size */
+                font-size: 1rem;
             }
 
             td {
@@ -65,8 +64,6 @@ import Footer from '../../components/Footer.astro';
                 border-right: 1px solid var(--btn-border);
                 vertical-align: middle;
                 color: var(--text-main);
-                
-                /* Shrinks the actual data contents and forces them onto one line */
                 font-size: 0.75rem; 
                 white-space: nowrap; 
             }
@@ -112,6 +109,7 @@ import Footer from '../../components/Footer.astro';
         </style>
     </head>
     <body>
+        <script is:inline src="/warning.js"></script>
         <Header />
         
         <main>
