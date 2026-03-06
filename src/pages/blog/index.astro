@@ -16,6 +16,7 @@ const posts = (await getCollection('blog')).sort(
 		<BaseHead title="Michelle's Playground - Logs" />
 	</head>
 	<body>
+		<script is:inline src="/warning.js"></script>
 		<Header />
 		<main>
 			<h1 style="color:var(--pink-neon); border-bottom: 4px solid var(--pink-neon); padding-bottom: 10px; margin-bottom: 30px; text-shadow: 2px 2px 0 #000;">[ LOGS & RAMBLINGS ]</h1>
@@ -47,6 +48,5 @@ const posts = (await getCollection('blog')).sort(
 			</div>
 		</main>
 		<Footer />
-		<script is:inline src="/warning.js"></script>
 	</body>
 </html>
