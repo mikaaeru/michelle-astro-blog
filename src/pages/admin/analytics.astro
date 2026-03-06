@@ -12,18 +12,17 @@ import Footer from '../../components/Footer.astro';
         <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/1.0.35/ua-parser.min.js"></script>
         
         <style>
-            /* Override global constraints to make the dashboard use the full screen width */
-            main {
-                max-width: 95vw !important;
-                width: 100%;
-                margin: 0 auto;
-            }
-            
             .analytics-wrapper {
                 background: color-mix(in srgb, var(--mc-bg-dark) 85%, transparent);
                 padding: 20px;
                 margin-top: 20px;
-                width: 100%;
+                
+                /* Forces the container to be 95% of the screen width and centers it, ignoring parent constraints */
+                width: 95vw !important;
+                max-width: 95vw !important;
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
             }
             
             h1.dashboard-title {
@@ -42,12 +41,11 @@ import Footer from '../../components/Footer.astro';
             }
 
             table {
-                width: 100%; /* Reverted back to 100% since the container is now wide */
+                width: 100%; 
                 border-collapse: collapse;
                 text-align: left;
             }
 
-            /* Pink Headers - Kept Normal Size */
             th {
                 background-color: var(--mc-stone);
                 color: var(--pink-neon);
@@ -57,19 +55,20 @@ import Footer from '../../components/Footer.astro';
                 padding: 12px 15px;
                 border-bottom: 2px solid var(--btn-border);
                 border-right: 1px solid var(--btn-border);
-                font-size: 1rem; /* Normal size */
+                font-size: 1rem; /* Keeps pink headers normal size */
             }
 
-            /* Data Cells - Shrunk Down */
             td {
                 line-height: 1.4;
-                padding: 8px 15px; /* Slightly reduced padding to match smaller text */
+                padding: 8px 15px;
                 border-bottom: 1px solid var(--btn-border);
                 border-right: 1px solid var(--btn-border);
                 vertical-align: middle;
                 color: var(--text-main);
-                font-size: 0.7rem; /* Makes only the contents underneath smaller */
-                white-space: nowrap; /* Forces content onto a single line */
+                
+                /* Shrinks the actual data contents and forces them onto one line */
+                font-size: 0.75rem; 
+                white-space: nowrap; 
             }
 
             tr:hover td {
@@ -102,7 +101,7 @@ import Footer from '../../components/Footer.astro';
                 text-align: center;
                 color: var(--pink-neon);
                 animation: pulse 1.5s infinite;
-                font-size: 1rem; /* Keep loading text normal size */
+                font-size: 1rem;
             }
 
             @keyframes pulse {
@@ -144,7 +143,6 @@ import Footer from '../../components/Footer.astro';
         <Footer />
 
         <script is:inline>
-            // ... (keep the same exact script block as before)
             async function fetchLogs() {
                 try {
                     const response = await fetch('/api/analytics');
