@@ -57,7 +57,6 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 	</head>
 
 	<body>
-		<script is:inline src="/warning.js"></script>
 		<Header />
 		<main>
 			<article>
@@ -86,6 +85,8 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				</div>
 			</article>
 		</main>
+		<script is:inline src="/warning.js"></script>
+
 		<Footer />
 	</body>
 </html>
