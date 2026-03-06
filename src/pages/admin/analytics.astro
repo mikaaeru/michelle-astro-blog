@@ -12,7 +12,12 @@ import Footer from '../../components/Footer.astro';
         <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/1.0.35/ua-parser.min.js"></script>
         
         <style>
-            /* Inherits standard layout from global CSS, no main overrides */
+            /* Override global constraints to make the dashboard use the full screen width */
+            main {
+                max-width: 95vw !important;
+                width: 100%;
+                margin: 0 auto;
+            }
             
             .analytics-wrapper {
                 background: color-mix(in srgb, var(--mc-bg-dark) 85%, transparent);
@@ -31,18 +36,18 @@ import Footer from '../../components/Footer.astro';
 
             .table-responsive {
                 width: 100%;
-                overflow-x: auto; /* Keeps the horizontal scrollbar active */
+                overflow-x: auto; 
                 border: 2px solid var(--btn-border);
                 background: var(--mc-bg-dark);
             }
 
             table {
-                width: 250%; /* Forces the table to be much wider than the container */
-                min-width: 2000px; /* Ensures a massive minimum width */
+                width: 100%; /* Reverted back to 100% since the container is now wide */
                 border-collapse: collapse;
                 text-align: left;
             }
 
+            /* Pink Headers - Kept Normal Size */
             th {
                 background-color: var(--mc-stone);
                 color: var(--pink-neon);
@@ -52,19 +57,19 @@ import Footer from '../../components/Footer.astro';
                 padding: 12px 15px;
                 border-bottom: 2px solid var(--btn-border);
                 border-right: 1px solid var(--btn-border);
-                font-size: 0.75rem; /* Makes header text smaller */
+                font-size: 1rem; /* Normal size */
             }
 
-            /* Data cells naturally inherit global body font (VT323) */
+            /* Data Cells - Shrunk Down */
             td {
                 line-height: 1.4;
-                padding: 12px 15px;
+                padding: 8px 15px; /* Slightly reduced padding to match smaller text */
                 border-bottom: 1px solid var(--btn-border);
                 border-right: 1px solid var(--btn-border);
-                vertical-align: top;
+                vertical-align: middle;
                 color: var(--text-main);
-                font-size: 0.75rem; /* Makes body text smaller */
-                white-space: nowrap; /* Prevents text from breaking onto new lines */
+                font-size: 0.7rem; /* Makes only the contents underneath smaller */
+                white-space: nowrap; /* Forces content onto a single line */
             }
 
             tr:hover td {
@@ -74,12 +79,12 @@ import Footer from '../../components/Footer.astro';
             .path-cell {
                 color: var(--pink-deep);
                 font-weight: bold;
-                white-space: nowrap; /* Overrides previous word-break */
+                white-space: nowrap;
             }
 
             .ua-cell {
                 color: var(--text-muted);
-                white-space: nowrap; /* Overrides previous word-wrap */
+                white-space: nowrap;
             }
 
             .map-link {
@@ -97,6 +102,7 @@ import Footer from '../../components/Footer.astro';
                 text-align: center;
                 color: var(--pink-neon);
                 animation: pulse 1.5s infinite;
+                font-size: 1rem; /* Keep loading text normal size */
             }
 
             @keyframes pulse {
@@ -138,6 +144,7 @@ import Footer from '../../components/Footer.astro';
         <Footer />
 
         <script is:inline>
+            // ... (keep the same exact script block as before)
             async function fetchLogs() {
                 try {
                     const response = await fetch('/api/analytics');
