@@ -17,6 +17,7 @@ import Footer from '../../components/Footer.astro';
                 padding: 20px;
                 margin-top: 20px;
                 
+                /* THE BREAKOUT TRICK */
                 width: 95vw !important;
                 max-width: 95vw !important;
                 position: relative;
@@ -106,6 +107,12 @@ import Footer from '../../components/Footer.astro';
                 50% { opacity: 1; }
                 100% { opacity: 0.5; }
             }
+
+            /* Added a tiny bit of spacing for the flag */
+            .flag-icon {
+                margin-right: 6px;
+                font-size: 0.9rem; /* Slightly larger than text so it's readable */
+            }
         </style>
     </head>
     <body>
@@ -141,6 +148,14 @@ import Footer from '../../components/Footer.astro';
         <Footer />
 
         <script is:inline>
+            // Helper function to convert a 2-letter country code into an emoji flag
+            function getFlagEmoji(countryCode) {
+                if (!countryCode || countryCode.length !== 2) return '🌐';
+                return countryCode
+                    .toUpperCase()
+                    .replace(/./g, char => String.fromCodePoint(char.charCodeAt(0) + 127397));
+            }
+
             async function fetchLogs() {
                 try {
                     const response = await fetch('/api/analytics');
@@ -161,7 +176,11 @@ import Footer from '../../components/Footer.astro';
                         const os = result.os.name ? `${result.os.name} ${result.os.version || ''}`.trim() : 'Unknown OS';
                         const browser = result.browser.name ? `${result.browser.name} ${result.browser.version || ''}`.trim() : 'Unknown Browser';
                         
-                        const location = `${visit.city !== 'unknown' ? visit.city + ', ' : ''}${visit.country}`;
+                        // Try to find a 2-letter country code from the API response
+                        const cCode = visit.country_code || (visit.country && visit.country.length === 2 ? visit.country : null);
+                        const flag = `<span class="flag-icon">${getFlagEmoji(cCode)}</span>`;
+                        
+                        const location = `${flag}${visit.city !== 'unknown' ? visit.city + ', ' : ''}${visit.country}`;
                         
                         const lat = visit.latitude || 0;
                         const lng = visit.longitude || 0;
