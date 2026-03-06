@@ -12,10 +12,18 @@ import Footer from '../../components/Footer.astro';
 		<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/1.0.35/ua-parser.min.js"></script>
 		
 		<style>
+			/* Make the wrapper wider than the standard blog post width */
+			main {
+				max-width: 1400px; /* Allow the main container to stretch wider */
+				margin: 0 auto;
+				padding: 0 1em;
+			}
+
 			.analytics-wrapper {
 				background: color-mix(in srgb, var(--mc-bg-dark) 85%, transparent);
-				padding: 30px;
+				padding: 20px;
 				margin-top: 20px;
+				width: 100%;
 			}
 			
 			h1.dashboard-title {
@@ -37,16 +45,10 @@ import Footer from '../../components/Footer.astro';
 			table {
 				width: 100%;
 				border-collapse: collapse;
-				font-size: 1.2rem; /* VT323 needs to be a bit larger */
 				text-align: left;
 			}
 
-			th, td {
-				padding: 12px 15px;
-				border-bottom: 1px solid var(--btn-border);
-				border-right: 1px solid var(--btn-border);
-			}
-
+			/* KEEP RETRO FONT FOR HEADERS ONLY */
 			th {
 				background-color: var(--mc-stone);
 				color: var(--pink-neon);
@@ -54,32 +56,39 @@ import Footer from '../../components/Footer.astro';
 				text-transform: uppercase;
 				white-space: nowrap;
 				text-shadow: 1px 1px 0 var(--mc-shadow);
+				padding: 12px 15px;
+				border-bottom: 2px solid var(--btn-border);
+				border-right: 1px solid var(--btn-border);
+			}
+
+			/* USE READABLE SANS-SERIF FONT FOR DATA */
+			td {
+				font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+				font-size: 0.95rem;
+				line-height: 1.4;
+				padding: 12px 15px;
+				border-bottom: 1px solid var(--btn-border);
+				border-right: 1px solid var(--btn-border);
+				vertical-align: top; /* Align top since UA strings will multiline */
+				color: var(--text-main);
 			}
 
 			tr:hover td {
 				background-color: var(--pink-glow);
-				color: var(--text-main);
 			}
 
 			.path-cell {
 				color: var(--pink-deep);
 				font-weight: bold;
-			}
-
-			.ua-cell {
-				max-width: 200px;
-				white-space: nowrap;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				color: var(--text-muted);
-				cursor: help;
-			}
-
-			.ua-cell:hover {
-				white-space: normal;
 				word-break: break-all;
-				background-color: var(--mc-stone);
-				color: var(--text-main);
+			}
+
+			/* REMOVED TRUNCATION - Let the text wrap naturally */
+			.ua-cell {
+				color: var(--text-muted);
+				word-wrap: break-word;
+				word-break: normal;
+				min-width: 300px; /* Ensure it has enough room to breathe before wrapping */
 			}
 
 			.map-link {
@@ -95,6 +104,7 @@ import Footer from '../../components/Footer.astro';
 
 			.loading-row {
 				text-align: center;
+				font-family: inherit; /* Inherits the retro font for the loading state */
 				font-size: 1.5rem;
 				color: var(--pink-neon);
 				animation: pulse 1.5s infinite;
@@ -155,23 +165,23 @@ import Footer from '../../components/Footer.astro';
 					data.forEach(visit => {
 						const tr = document.createElement('tr');
 						
-						// 1. Parse User Agent for Detailed OS and Browser
+						// Parse User Agent for Detailed OS and Browser
 						const parser = new UAParser(visit.user_agent);
 						const result = parser.getResult();
 						const os = result.os.name ? `${result.os.name} ${result.os.version || ''}`.trim() : 'Unknown OS';
 						const browser = result.browser.name ? `${result.browser.name} ${result.browser.version || ''}`.trim() : 'Unknown Browser';
 						
-						// 2. Format Location
+						// Format Location
 						const location = `${visit.city !== 'unknown' ? visit.city + ', ' : ''}${visit.country}`;
 						
-						// 3. Format Geolocation Coordinates (Clickable Google Maps link)
+						// Format Geolocation Coordinates
 						const lat = visit.latitude || 0;
 						const lng = visit.longitude || 0;
 						const coords = (lat !== 0 && lng !== 0) 
 							? `<a href="https://www.google.com/maps/search/?api=1&query=${lat},${lng}" target="_blank" class="map-link" title="View on map">${lat.toFixed(4)}, ${lng.toFixed(4)}</a>` 
 							: 'Unknown';
 
-						// 4. Format detailed Time
+						// Format detailed Time
 						const timeString = new Date(visit.timestamp).toLocaleString(undefined, {
 							month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit'
 						});
@@ -184,7 +194,7 @@ import Footer from '../../components/Footer.astro';
 							<td>${coords}</td>
 							<td>${os}</td>
 							<td>${browser}</td>
-							<td class="ua-cell" title="${visit.user_agent}">${visit.user_agent || 'Unknown'}</td>
+							<td class="ua-cell">${visit.user_agent || 'Unknown'}</td>
 						`;
 						tbody.appendChild(tr);
 					});
@@ -194,7 +204,6 @@ import Footer from '../../components/Footer.astro';
 				}
 			}
 
-			// Fetch immediately, then poll every 5 seconds
 			fetchLogs();
 			setInterval(fetchLogs, 5000);
 		</script>
