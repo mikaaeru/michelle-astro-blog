@@ -1,0 +1,48 @@
+---
+// This is your Astro component
+---
+<html lang="en">
+<head>
+    <title>Live Analytics</title>
+</head>
+<body>
+    <h1>Real-Time Traffic Log</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>IP</th>
+                <th>Location</th>
+                <th>Path</th>
+            </tr>
+        </thead>
+        <tbody id="log-body">
+            </tbody>
+    </table>
+
+    <script>
+        async function fetchLogs() {
+            const response = await fetch('/api/analytics');
+            const data = await response.json();
+            
+            const tbody = document.getElementById('log-body');
+            tbody.innerHTML = '';
+            
+            data.forEach(visit => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${new Date(visit.timestamp).toLocaleTimeString()}</td>
+                    <td>${visit.ip}</td>
+                    <td>${visit.city !== 'unknown' ? visit.city + ', ' : ''}${visit.country}</td>
+                    <td>${visit.path}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Fetch immediately, then poll every 5 seconds for that real-time feel
+        fetchLogs();
+        setInterval(fetchLogs, 5000);
+    </script>
+</body>
+</html>

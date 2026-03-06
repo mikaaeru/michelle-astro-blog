@@ -1,18 +1,33 @@
 {
 	"name": "michelle-astro-blog",
 	"compatibility_date": "2025-10-08",
-	"compatibility_flags": ["nodejs_compat"],
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
 	"main": "./dist/_worker.js/index.js",
 	"assets": {
 		"directory": "./dist",
 		"binding": "ASSETS"
 	},
 	"routes": [
-		{ "pattern": "kamikami.eu", "custom_domain": true },
-		{ "pattern": "www.kamikami.eu", "custom_domain": true }
+		{
+			"pattern": "kamikami.eu",
+			"custom_domain": true
+		},
+		{
+			"pattern": "www.kamikami.eu",
+			"custom_domain": true
+		}
 	],
 	"observability": {
 		"enabled": true
 	},
-	"upload_source_maps": true
+	"upload_source_maps": true,
+	"d1_databases": [
+		{
+			"binding": "analytics_db",
+			"database_name": "analytics-db",
+			"database_id": "f9544be3-186d-4859-94ea-97194d5d0203"
+		}
+	]
 }
