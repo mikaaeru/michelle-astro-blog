@@ -13,7 +13,11 @@ export const onRequest = defineMiddleware(async (context, next) => {
     ) {
         return response;
     }
-
+    
+    if (context.cookies.has('CF_Authorization')) {
+        return response;
+    }
+    
     const runtime = context.locals.runtime;
     if (!runtime || !runtime.env.DB) return response; // Failsafe for local dev without bindings
 
