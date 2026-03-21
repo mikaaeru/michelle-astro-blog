@@ -3,7 +3,7 @@
     const SCROLL_THRESHOLD = 10; 
 
     const phrases = [
-        "STOP", "PILIH PRABOWO GIBRAN", "PILIH NOMOR 2!", "HAIIIIIIII!", "ANTEK ANTEK ASING", "PECINTA SAWIT"       
+        "STOP", "PILIH PRABOWO GIBRAN", "PILIH NOMOR 2 2029", "HAIIIIIIII!", "ANTEK ANTEK ASING", "PALING NYAWIT"       
     ];
 
     const audioSources = [
