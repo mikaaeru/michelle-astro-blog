@@ -33,7 +33,7 @@ If you allow the ```PPQCheck``` to run for first launch of sideloaded apps, then
 
 ## Introducing Michelle DNS Suite for Sideloading
 ![blog placeholder](/dns.jpeg)
-[Download DNS profile here](https://cloud.kamikami.eu/s/michelleprofiles)
+## [Download DNS profile here](https://cloud.kamikami.eu/s/michelledns)
 
 This profile allows user to choose between 3 DNS over TLS server that is hosted by me under Cloudflare. "Sideload Install Only" mode blocks the 7 domains listed to prevent certificates from being blacklisted instantly, while "Sideloaded KEEP" adds PPQ blocking to blacklists from PPQCheck. As a bonus, this DNS suite profile also performs ads and tracking filtering with filters provided by oisd.nl for break free experience and anti phishing from URLhaus. The workflow to install apps after installing the DNS profile then became:
 
