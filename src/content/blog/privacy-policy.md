@@ -3,6 +3,8 @@ title: "Privacy Policy: Encrypted DNS Profiles"
 description: "How your network data is managed when using our Cloudflare Zero Trust DNS profiles."
 pubDate: "Mar 25 2026"
 author: "Michelle"
+heroImage: "/apple.jpg"
+
 ---
 
 ## Introduction and Infrastructure
