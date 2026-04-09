@@ -1,6 +1,6 @@
 ---
-title: "Privacy Policy: Encrypted DNS Profiles"
-description: "How your network data is managed when using our Cloudflare Zero Trust DNS profiles."
+title: "Privacy Policy"
+description: "How your network data is managed when using our services."
 pubDate: "Mar 25 2026"
 author: "Michelle"
 heroImage: "/apple.jpg"
